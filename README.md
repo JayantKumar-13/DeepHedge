@@ -25,7 +25,7 @@ The workflow includes:
 ## Repository Structure
 
 ```text
-deep-hedging-nifty-options/
+DeepHedge/
 │── README.md
 │── requirements.txt
 │
@@ -42,8 +42,8 @@ deep-hedging-nifty-options/
 │   ├── Delta_vs_Strike_Price.png
 │   ├── Gamma_vs_Strike_Price.png
 │   ├── Theta_vs_Strike_Price.png
-│   ├── Implied_Volatility_vs_Strike_Price.png
-│   └── P&L_Distribution.png
+│   ├── Implied_Volatility_vs._Strike_Price.png
+│   └── P&L_Distributions_for_Deep_Hedging_vs._Black-Scholes_Delta_Hedging.png
 ```
 
 ---
@@ -56,6 +56,7 @@ deep-hedging-nifty-options/
 - **Pandas**
 - **SciPy**
 - **Matplotlib**
+- **Scikit-learn**
 - **Black-Scholes Option Pricing Model**
 
 ---
@@ -66,49 +67,49 @@ The project uses minute-level **NIFTY option chain data** for two trading sessio
 
 | Dataset | Description |
 |---------|-------------|
-| `20260205_option_minute_prices_expiry.csv` | NIFTY options data collected on expiry day. |
-| `20260204_option_minute_prices_non_expiry.csv` | NIFTY options data collected on a non-expiry trading day. |
+| `20260205_option_minute_prices_expiry.csv` | Minute-level NIFTY options and futures prices collected on an expiry trading day. |
+| `20260204_option_minute_prices_non_expiry.csv` | Minute-level NIFTY options and futures prices collected on a non-expiry trading day. |
 
-The datasets contain:
+Each dataset contains:
 
-- Date
-- Minute timestamp
-- Option/Futures symbol
+- Trading date
+- Minute-level timestamp
+- Futures and option symbols
 - Last traded price
-- Strike price (parsed from symbol)
+- Strike price (parsed from option symbol)
 - Option type (Call / Put)
 
 ---
 
 ## Workflow
 
-1. Load minute-level option chain data.
-2. Filter option contracts for a specific observation time.
-3. Extract underlying futures price.
-4. Compute **Implied Volatility** using Black-Scholes inversion.
-5. Calculate **Delta, Gamma, and Theta** for each option.
-6. Generate multiple GBM price paths.
-7. Train a Deep Hedging neural network using simulated price paths.
-8. Optimize hedging strategy using **CVaR Loss**.
-9. Evaluate hedge performance using portfolio P&L distribution.
+1. Load minute-level NIFTY option chain data.
+2. Filter contracts for a specific observation time (11:00 AM).
+3. Extract the underlying NIFTY futures price.
+4. Compute **Implied Volatility** using the Black-Scholes model.
+5. Calculate **Delta**, **Gamma**, and **Theta** for Call and Put options.
+6. Simulate future NIFTY price paths using **Geometric Brownian Motion (GBM)**.
+7. Train a **Deep Hedging Neural Network** on simulated paths.
+8. Optimize hedge positions using **Conditional Value at Risk (CVaR)**.
+9. Evaluate the hedging strategy through portfolio P&L analysis.
 
 ---
 
-## Model
+## Deep Hedging Model
 
 ### Inputs
 
-- Underlying asset price
-- Black-Scholes Delta
-- Previous hedge position
+- Underlying asset price.
+- Black-Scholes Delta.
+- Previous hedge position.
 
 ### Output
 
-- Predicted hedge ratio (Delta)
+- Predicted hedge ratio (Delta) at every time step.
 
 ### Loss Function
 
-The model minimizes **Conditional Value at Risk (CVaR)** of the hedged portfolio P&L instead of traditional mean squared error.
+The neural network minimizes **Conditional Value at Risk (CVaR)** of the hedged portfolio, enabling the model to learn hedge positions that reduce extreme downside losses rather than simply minimizing average error.
 
 ---
 
@@ -116,7 +117,7 @@ The model minimizes **Conditional Value at Risk (CVaR)** of the hedged portfolio
 
 ### 1. Simulated GBM Price Paths
 
-The figure below shows **10 simulated Geometric Brownian Motion (GBM)** price paths generated using the underlying NIFTY futures price. These simulated trajectories are used as training paths for the deep hedging model.
+Ten simulated Geometric Brownian Motion price paths generated using the underlying NIFTY futures price. These simulated trajectories are used to train the Deep Hedging model.
 
 ![Simulated GBM Price Paths](images/Simulated_GBM_Price_Paths.png)
 
@@ -124,12 +125,13 @@ The figure below shows **10 simulated Geometric Brownian Motion (GBM)** price pa
 
 ### 2. Deep Hedging Results
 
-This visualization summarizes the learned hedging strategy throughout the trading session.
+The Deep Hedging framework learns hedge positions dynamically throughout the trading session.
 
-It includes:
-- **Delta hedge position** over time.
-- **Implied volatility** evolution.
-- **Underlying NIFTY futures price** movement.
+This visualization includes:
+
+- Delta hedge position over time.
+- Implied volatility trend.
+- Underlying NIFTY futures price movement.
 
 ![Deep Hedging Results](images/Delta_Hedging_Results.png)
 
@@ -137,7 +139,7 @@ It includes:
 
 ### 3. Delta vs Strike Price
 
-Black-Scholes Delta for Call and Put options across different strike prices at **11:00 AM**.
+Black-Scholes Delta for Call and Put options across different strike prices observed at **11:00 AM**.
 
 ![Delta vs Strike Price](images/Delta_vs_Strike_Price.png)
 
@@ -145,7 +147,7 @@ Black-Scholes Delta for Call and Put options across different strike prices at *
 
 ### 4. Gamma vs Strike Price
 
-Gamma variation across strike prices for Call and Put options.
+Gamma values for Call and Put options across strike prices.
 
 ![Gamma vs Strike Price](images/Gamma_vs_Strike_Price.png)
 
@@ -163,33 +165,27 @@ Theta decay across strike prices for Call and Put options.
 
 Implied volatility smile observed across NIFTY option strike prices at **11:00 AM**.
 
-![Implied Volatility vs Strike Price](images/Implied_Volatility_vs_Strike_Price.png)
+![Implied Volatility vs Strike Price](images/Implied_Volatility_vs._Strike_Price.png)
 
 ---
 
 ### 7. Portfolio P&L Distribution
 
-Distribution of hedged portfolio profit and loss after applying the Deep Hedging strategy and comparison with Black-Scholes Delta Hedging.
+Comparison of the portfolio profit-and-loss distribution obtained using the **Deep Hedging** strategy and the classical **Black-Scholes Delta Hedging** strategy.
 
-![Portfolio P&L Distribution](images/P&L_Distribution_for_Deep_Hedging_vs_Black_Scholes_Delta_Hedging.png)
-
----
-
-### Portfolio P&L Distribution
-
-![P&L Distribution](images/P&L_Distribution.png)
+![Portfolio Pngit L Distribution](images/P&L_Distributions_for_Deep_Hedging_vs._Black-Scholes_Delta_Hedging.png)
 
 ---
 
 ## Key Concepts Implemented
 
-- Black-Scholes Option Pricing
-- Implied Volatility Estimation
-- Option Greeks (Delta, Gamma, Theta)
-- Geometric Brownian Motion (GBM)
-- Dynamic Delta Hedging
-- Deep Hedging using Neural Networks
-- CVaR (Conditional Value at Risk) Optimization
+- Black-Scholes Option Pricing Model.
+- Implied Volatility Estimation.
+- Option Greeks (Delta, Gamma, Theta).
+- Geometric Brownian Motion (GBM) Simulation.
+- Dynamic Delta Hedging.
+- Deep Hedging using Neural Networks.
+- Conditional Value at Risk (CVaR) Optimization.
 
 ---
 
@@ -198,8 +194,8 @@ Distribution of hedged portfolio profit and loss after applying the Deep Hedging
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/deep-hedging-nifty-options.git
-cd deep-hedging-nifty-options
+git clone https://github.com/<your-username>/DeepHedge.git
+cd DeepHedge
 ```
 
 ### 2. Install dependencies
@@ -210,17 +206,20 @@ pip install -r requirements.txt
 
 ### 3. Open the notebook
 
-Run the notebook in **Google Colab** or **Jupyter Notebook**.
+Run the notebook using **Google Colab** or **Jupyter Notebook**.
 
 ```bash
 jupyter notebook notebooks/options_trading_price_prediction.ipynb
 ```
 
+The notebook will load the datasets from the `data/` directory and reproduce the complete workflow, including implied volatility estimation, Greek calculations, GBM simulations, Deep Hedging training, and portfolio P&L visualizations.
+
 ---
 
 ## Future Improvements
 
-- Support multiple option expiries.
-- Train on historical multi-day option chain data.
-- Compare Deep Hedging with classical Delta Hedging.
-- Extend the framework to include transaction costs and volatility smile dynamics.
+- Support multiple option expiry dates.
+- Train on larger historical option-chain datasets.
+- Compare Deep Hedging with classical Delta Hedging under different volatility regimes.
+- Incorporate transaction costs and slippage into the hedging strategy.
+- Extend the framework to stochastic volatility models and volatility smile dynamics.
