@@ -141,7 +141,7 @@ This visualization includes:
 
 Black-Scholes Delta for Call and Put options across different strike prices observed at **11:00 AM**.
 
-![Delta vs Strike Price](images/Delta_vs_Strike_Price.png)
+![Delta vs Strike Price](images/Delta_vs._Strike_Price.png)
 
 ---
 
@@ -149,7 +149,7 @@ Black-Scholes Delta for Call and Put options across different strike prices obse
 
 Gamma values for Call and Put options across strike prices.
 
-![Gamma vs Strike Price](images/Gamma_vs_Strike_Price.png)
+![Gamma vs Strike Price](images/Gamma_vs._Strike_Price.png)
 
 ---
 
@@ -157,7 +157,7 @@ Gamma values for Call and Put options across strike prices.
 
 Theta decay across strike prices for Call and Put options.
 
-![Theta vs Strike Price](images/Theta_vs_Strike_Price.png)
+![Theta vs Strike Price](images/Theta_vs._Strike_Price.png)
 
 ---
 
@@ -173,7 +173,7 @@ Implied volatility smile observed across NIFTY option strike prices at **11:00 A
 
 Comparison of the portfolio profit-and-loss distribution obtained using the **Deep Hedging** strategy and the classical **Black-Scholes Delta Hedging** strategy.
 
-![Portfolio Pngit L Distribution](images/P&L_Distributions_for_Deep_Hedging_vs._Black-Scholes_Delta_Hedging.png)
+![Portfolio Pngit L Distribution](images/PnL_Distributions_for_Deep_Hedging_vs._Black-Scholes_Delta_Hedging.png)
 
 ---
 
