@@ -112,45 +112,66 @@ The model minimizes **Conditional Value at Risk (CVaR)** of the hedged portfolio
 
 ---
 
-## Results
+## Results & Visualizations
 
-### Simulated GBM Price Paths
+### 1. Simulated GBM Price Paths
 
-![GBM Simulation](images/Simulated_GBM_Price_Paths.png)
+The figure below shows **10 simulated Geometric Brownian Motion (GBM)** price paths generated using the underlying NIFTY futures price. These simulated trajectories are used as training paths for the deep hedging model.
+
+![Simulated GBM Price Paths](images/Simulated_GBM_Price_Paths.png)
 
 ---
 
-### Deep Hedging Results
+### 2. Deep Hedging Results
 
-- Delta Hedge Position
-- Implied Volatility Trend
-- Underlying Asset Price Movement
+This visualization summarizes the learned hedging strategy throughout the trading session.
+
+It includes:
+- **Delta hedge position** over time.
+- **Implied volatility** evolution.
+- **Underlying NIFTY futures price** movement.
 
 ![Deep Hedging Results](images/Delta_Hedging_Results.png)
 
 ---
 
-### Delta vs Strike Price
+### 3. Delta vs Strike Price
 
-![Delta](images/Delta_vs_Strike_Price.png)
+Black-Scholes Delta for Call and Put options across different strike prices at **11:00 AM**.
 
----
-
-### Gamma vs Strike Price
-
-![Gamma](images/Gamma_vs_Strike_Price.png)
+![Delta vs Strike Price](images/Delta_vs_Strike_Price.png)
 
 ---
 
-### Theta vs Strike Price
+### 4. Gamma vs Strike Price
 
-![Theta](images/Theta_vs_Strike_Price.png)
+Gamma variation across strike prices for Call and Put options.
+
+![Gamma vs Strike Price](images/Gamma_vs_Strike_Price.png)
 
 ---
 
-### Implied Volatility vs Strike Price
+### 5. Theta vs Strike Price
 
-![Implied Volatility](images/Implied_Volatility_vs_Strike_Price.png)
+Theta decay across strike prices for Call and Put options.
+
+![Theta vs Strike Price](images/Theta_vs_Strike_Price.png)
+
+---
+
+### 6. Implied Volatility vs Strike Price
+
+Implied volatility smile observed across NIFTY option strike prices at **11:00 AM**.
+
+![Implied Volatility vs Strike Price](images/Implied_Volatility_vs_Strike_Price.png)
+
+---
+
+### 7. Portfolio P&L Distribution
+
+Distribution of hedged portfolio profit and loss after applying the Deep Hedging strategy and comparison with Black-Scholes Delta Hedging.
+
+![Portfolio P&L Distribution](images/P&L_Distribution_for_Deep_Hedging_vs_Black_Scholes_Delta_Hedging.png)
 
 ---
 
